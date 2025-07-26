@@ -11,6 +11,9 @@ import {
   MessageSquare,
   FileQuestionMark,
   MessageSquareQuote,
+  Copy,
+  Check,
+  Pointer,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import LineChart from "../assets/lineChart";
@@ -27,9 +30,7 @@ function Form() {
   useEffect(() => {
     const fetchForms = async () => {
       try {
-        const response = await axios.get(
-          `${apiUrl}/admin/form/${id}`
-        );
+        const response = await axios.get(`${apiUrl}/admin/form/${id}`);
         setFormData(response.data.data.formData);
       } catch (error) {
         alert("Error from backend" + error);
@@ -56,8 +57,8 @@ function Form() {
   const [formData, setFormData] = useState([]);
   const [formResponse, setFormResponse] = useState([]);
   const [chartData, setChartData] = useState([]);
-  const [barChartData,setBarChartData] = useState([]);
-  const [pieChartData,setPieChartData] = useState([]);
+  const [barChartData, setBarChartData] = useState([]);
+  const [pieChartData, setPieChartData] = useState([]);
 
   useEffect(() => {
     const monthBuckets = [
@@ -85,55 +86,59 @@ function Form() {
   }, [formResponse]);
 
   useEffect(() => {
+    const ratingCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
 
-  const ratingCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    formResponse.forEach((response) => {
+      const rating = Number(response.overallRating?.answer);
+      if (rating >= 1 && rating <= 5) {
+        ratingCount[rating]++;
+      }
+    });
 
-  formResponse.forEach((response) => {
-    const rating = Number(response.overallRating?.answer);
-    if (rating >= 1 && rating <= 5) {
-      ratingCount[rating]++;
-    }
-  });
+    const chartData = Object.entries(ratingCount).map(([rating, count]) => ({
+      month: `${rating} ⭐`,
+      desktop: count,
+    }));
 
-  const chartData = Object.entries(ratingCount).map(([rating, count]) => ({
-    month: `${rating} ⭐`,
-    desktop: count,
-  }));
-
-  setBarChartData(chartData);
-
-
+    setBarChartData(chartData);
   }, [formResponse]);
-
-
 
   useEffect(() => {
+    const ratingCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+    const ratingColor = ["#3b82f6", "#f59e0b", "#ef4444", "#10b981", "#6366f1"];
 
-  const ratingCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
-  const ratingColor = ["#3b82f6","#f59e0b","#ef4444","#10b981","#6366f1"]
+    formResponse.forEach((response) => {
+      const rating = Number(response.overallRating?.answer);
+      if (rating >= 1 && rating <= 5) {
+        ratingCount[rating]++;
+      }
+    });
 
-  formResponse.forEach((response) => {
-    const rating = Number(response.overallRating?.answer);
-    if (rating >= 1 && rating <= 5) {
-      ratingCount[rating]++;
-    }
-  });
+    const chartData = Object.entries(ratingCount).map(
+      ([rating, count], index) => ({
+        star: `${rating} Star`,
+        response: count,
+        color: ratingColor[index],
+      })
+    );
 
-  const chartData = Object.entries(ratingCount).map(([rating, count],index) => ({
-    star: `${rating} Star`,
-    response: count,
-    color:ratingColor[index]
-  }));
+    console.log(chartData);
 
-  console.log(chartData)
-
-  setPieChartData(chartData);
-
-
+    setPieChartData(chartData);
   }, [formResponse]);
 
+  const [copiedUrl, setCopiedUrl] = useState(false);
 
-  
+  const copyToClipboard = async () => {
+    const url = `${window.location.origin}/user/${id}`;
+    try {
+      await navigator.clipboard.writeText(url);
+      setCopiedUrl(true);
+      setTimeout(() => setCopiedUrl(false), 2000);
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
 
   return (
     <>
@@ -157,6 +162,28 @@ function Form() {
               </div>
             </div>
             <div className="flex items-center gap-3">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={copyToClipboard}
+                className={`cursor-pointer transition-all duration-200 ${
+                  copiedUrl
+                    ? "bg-green-50 border-green-200 text-green-700"
+                    : "bg-blue-50 border-blue-200 text-blue-700"
+                }`}
+              >
+                {copiedUrl ? (
+                  <>
+                    <Check className="h-3 w-3 mr-1" />
+                    <span className="hidden sm:block">Copied</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="h-3 w-3 mr-1" />
+                    <span className="hidden sm:block">Copy</span>
+                  </>
+                )}
+              </Button>
               <Badge variant="default">{formData.status}</Badge>
               <Link to={`/dashboard/${id}/edit`}>
                 <Button variant="outline" className="cursor-pointer">
@@ -174,8 +201,8 @@ function Form() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 mx-6 gap-6 mb-8">
           <LineChart data={chartData} />
-          <BarChart data={barChartData}/>
-          <PieChart data={pieChartData}/>
+          <BarChart data={barChartData} />
+          <PieChart data={pieChartData} />
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 mb-8 mx-6">
