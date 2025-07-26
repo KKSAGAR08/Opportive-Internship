@@ -19,6 +19,7 @@ import BarChart from "../assets/barChart";
 import { ResponsiveContainer } from "recharts";
 import { useParams } from "react-router-dom";
 import StarRating2 from "../assets/starRating2";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function Form() {
   const { id } = useParams();
@@ -27,7 +28,7 @@ function Form() {
     const fetchForms = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/form/${id}`
+          `${apiUrl}/admin/form/${id}`
         );
         setFormData(response.data.data.formData);
       } catch (error) {
@@ -41,7 +42,7 @@ function Form() {
   useEffect(() => {
     const fetchResponse = async () => {
       try {
-        const response = await axios.get(`http://localhost:3000/user/${id}`);
+        const response = await axios.get(`${apiUrl}/user/${id}`);
 
         setFormResponse(response.data.data.allResponse);
       } catch (error) {

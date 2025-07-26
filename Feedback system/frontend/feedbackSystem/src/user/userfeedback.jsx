@@ -16,6 +16,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Star, CheckCircle, ArrowRight } from "lucide-react";
 import axios from "axios";
 import StarRating2 from "../assets/starRating2";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function UserFeedbackForm() {
   const { id: formId } = useParams();
@@ -30,7 +31,7 @@ function UserFeedbackForm() {
     const fetchForms = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/form/${formId}`
+          `${apiUrl}/admin/form/${formId}`
         );
         setFormData(response.data.data.formData);
       } catch (error) {
@@ -105,7 +106,7 @@ function UserFeedbackForm() {
 
     try {
       const response = await axios.post(
-        `http://localhost:3000/user/${formId}`,
+        `${apiUrl}/user/${formId}`,
         finalForm
       );
       console.log(response.data.message);

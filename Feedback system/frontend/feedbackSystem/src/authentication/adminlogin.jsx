@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { ArrowLeft } from "lucide-react";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function AdminLogin() {
   const [email, setEmail] = useState("");
@@ -29,7 +30,7 @@ export default function AdminLogin() {
     try {
       const finalAuth = { email, password };
       const response = await axios.post(
-        "http://localhost:3000/admin/form/login",
+        `${apiUrl}/admin/form/login`,
         finalAuth
       );
 

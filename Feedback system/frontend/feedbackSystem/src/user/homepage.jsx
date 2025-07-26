@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { FileQuestionMark, MessageSquare, Star, Users } from "lucide-react";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 
 export default function FeedbackHome() {
@@ -19,7 +20,7 @@ export default function FeedbackHome() {
     const fetchForms = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/form/${formId}`
+          `${apiUrl}/admin/form/${formId}`
         );
         setFormData(response.data.data.formData)
       } catch (error) {

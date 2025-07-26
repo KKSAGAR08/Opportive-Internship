@@ -23,6 +23,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Plus, Trash2, Star, MessageSquare } from "lucide-react";
 import axios from "axios";
 import Rating from "@mui/material/Rating";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 export default function EditForm() {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export default function EditForm() {
     const fetchForm = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/form/${formId}`
+          `${apiUrl}/admin/form/${formId}`
         );
         const form = response.data.data.formData;
 
@@ -100,7 +101,7 @@ export default function EditForm() {
     try {
       const updatedForm = { ...formData, questions, overallRating };
       await axios.put(
-        `http://localhost:3000/admin/form/${formId}`,
+        `${apiUrl}/admin/form/${formId}`,
         updatedForm
       );
       navigate(`/dashboard/${formId}`);

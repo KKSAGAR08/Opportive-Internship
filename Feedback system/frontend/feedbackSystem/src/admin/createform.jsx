@@ -32,6 +32,7 @@ import Rating from "@mui/material/Rating";
 import { useNavigate } from "react-router-dom";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import axios from "axios";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function Createform() {
   const navigate = useNavigate();
@@ -110,7 +111,7 @@ function Createform() {
     try {
       console.log(finalForm);
       const response = await axios.post(
-        "http://localhost:3000/admin/form/create",
+        `${apiUrl}/admin/form/create`,
         finalForm
       );
       console.log(response.data.message);
@@ -373,7 +374,7 @@ function Createform() {
               <Button type="submit" className="flex-1 h-11 cursor-pointer">
                 Create Form
               </Button>
-              <Link href="/admin/dashboard">
+              <Link to="/dashboard">
                 <Button
                   type="button"
                   variant="outline"

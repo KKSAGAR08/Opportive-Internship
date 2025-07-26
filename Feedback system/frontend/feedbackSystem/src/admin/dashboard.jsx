@@ -8,6 +8,7 @@ import { CardDescription, CardFooter } from "../components/ui/card";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+const apiUrl = import.meta.env.VITE_API_URL;
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function Dashboard() {
   useEffect(() => {
     const fetchForms = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/admin/form");
+        const response = await axios.get(`${apiUrl}/admin/form`);
         setFormData(response.data.data.allForms);
       } catch (error) {
         alert("Error from backend" + error);
