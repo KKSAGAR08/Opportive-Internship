@@ -35,7 +35,7 @@ export default function LineChartCard({data}) {
     <Card>
       <CardHeader>
         <CardTitle>Line Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>January - December</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="w-full h-36">
@@ -66,7 +66,7 @@ export default function LineChartCard({data}) {
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+          Showing total response for the last 12 months
         </div>
       </CardFooter>
     </Card>

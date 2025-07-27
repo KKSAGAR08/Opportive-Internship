@@ -25,7 +25,7 @@ export default function ChartBarDefault({data}) {
     <Card>
       <CardHeader>
         <CardTitle>Bar Chart</CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>January - December</CardDescription>
       </CardHeader>
 
       <CardContent>
@@ -56,7 +56,7 @@ export default function ChartBarDefault({data}) {
           Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
         </div>
         <div className="text-muted-foreground leading-none">
-          Showing total visitors for the last 6 months
+          Showing overall rateing for the users last 12 months
         </div>
       </CardFooter>
     </Card>

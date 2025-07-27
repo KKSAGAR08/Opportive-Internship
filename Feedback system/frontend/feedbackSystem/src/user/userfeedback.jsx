@@ -30,9 +30,7 @@ function UserFeedbackForm() {
   useEffect(() => {
     const fetchForms = async () => {
       try {
-        const response = await axios.get(
-          `${apiUrl}/admin/form/${formId}`
-        );
+        const response = await axios.get(`${apiUrl}/admin/form/${formId}`);
         setFormData(response.data.data.formData);
       } catch (error) {
         alert("Error from backend" + error);
@@ -57,59 +55,55 @@ function UserFeedbackForm() {
   };
 
   const handleFormSubmit = async (e) => {
-  e.preventDefault();
-  setIsSubmitting(true);
+    e.preventDefault();
+    setIsSubmitting(true);
 
-  await new Promise((resolve) => setTimeout(resolve, 1500));
-  setIsSubmitting(false);
+    
 
-  let unAnswered = [];
+    let unAnswered = [];
 
-  // Check if all normal questions are answered
-  formData.questions.forEach((question) => {
-    if (!(question.id in formAnswers)) {
-      unAnswered.push(`${question.text}`);
+    // Check if all normal questions are answered
+    formData.questions.forEach((question) => {
+      if (!(question.id in formAnswers)) {
+        unAnswered.push(`${question.text}`);
+      }
+    });
+
+    // Check if overall rating is answered
+    if (!formAnswers["R1"]) {
+      unAnswered.push("Overall Rating");
     }
-  });
 
-  // Check if overall rating is answered
-  if (!formAnswers["R1"]) {
-    unAnswered.push("Overall Rating");
-  }
+    if (unAnswered.length > 0) {
+      alert("Unanswered questions:\n" + unAnswered.join("\n"));
+      return;
+    }
 
-  if (unAnswered.length > 0) {
-    alert("Unanswered questions:\n" + unAnswered.join("\n"));
-    return;
-  }
+    const responses = formData.questions.map((question) => ({
+      qid: question.id,
+      qtype: question.type,
+      answer: String(formAnswers[question.id] ?? ""),
+    }));
 
-  const responses = formData.questions.map((question) => ({
-    qid: question.id,
-    qtype: question.type,
-    answer: String(formAnswers[question.id] ?? ""),
-  }));
+    const overallRating = {
+      qid: "R1",
+      qtype: "star-rating",
+      answer: String(formAnswers["R1"] ?? ""),
+    };
 
-  const overallRating = {
-    qid: "R1",
-    qtype: "star-rating",
-    answer: String(formAnswers["R1"] ?? ""),
-  };
+    const finalForm = {
+      formId,
+      userDetails,
+      responses,
+      overallRating,
+    };
 
-  const finalForm = {
-    formId,
-    userDetails,
-    responses,
-    overallRating,
-  };
-
-  console.log(finalForm);
-
+    console.log(finalForm);
 
     try {
-      const response = await axios.post(
-        `${apiUrl}/user/${formId}`,
-        finalForm
-      );
+      const response = await axios.post(`${apiUrl}/user/${formId}`, finalForm);
       console.log(response.data.message);
+      setIsSubmitting(false);
 
       setCurrentStep("success");
     } catch (error) {
@@ -151,7 +145,7 @@ function UserFeedbackForm() {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
       <div className="container mx-auto max-w-2xl">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2 capitalize">
             {formData.title}
           </h1>
           <p className="text-gray-600">{formData.description}</p>
@@ -231,7 +225,7 @@ function UserFeedbackForm() {
                     required
                   />
                 </div>
-                <Button type="submit" className="w-full">
+                <Button type="submit" className="w-full cursor-pointer">
                   Continue to Questions
                   <ArrowRight className="h-4 w-4 ml-2" />
                 </Button>
@@ -252,7 +246,7 @@ function UserFeedbackForm() {
               <form onSubmit={handleFormSubmit} className="space-y-8">
                 {formData.questions.map((question, index) => (
                   <div key={question.id} className="space-y-3">
-                    <Label className="text-base font-medium">
+                    <Label className="text-base font-medium capitalize">
                       {index + 1}. {question.text}
                     </Label>
 
@@ -319,7 +313,7 @@ function UserFeedbackForm() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="flex-1"
+                    className="flex-1 cursor-pointer"
                   >
                     {isSubmitting ? (
                       <>
@@ -358,6 +352,9 @@ function UserFeedbackForm() {
                   <p className="text-sm text-gray-600">
                     A confirmation has been sent to{" "}
                     <strong>{userDetails.email}</strong>
+                  </p>
+                  <p className="text-sm text-gray-600">
+                    <strong>Your can now close the tab</strong>
                   </p>
                 </div>
               </div>

@@ -14,6 +14,8 @@ import {
   Copy,
   Check,
   Pointer,
+  Star,
+  X,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import LineChart from "../assets/lineChart";
@@ -59,6 +61,7 @@ function Form() {
   const [chartData, setChartData] = useState([]);
   const [barChartData, setBarChartData] = useState([]);
   const [pieChartData, setPieChartData] = useState([]);
+  const [avgRating, setAvgRating] = useState(0);
 
   useEffect(() => {
     const monthBuckets = [
@@ -104,6 +107,18 @@ function Form() {
   }, [formResponse]);
 
   useEffect(() => {
+    if (!formResponse || formResponse.length === 0) return;
+
+    const sum = formResponse.reduce(
+      (acc, curr) => acc + Number(curr.overallRating.answer),
+      0
+    );
+    const average = sum / formResponse.length;
+
+    setAvgRating(average.toFixed(0));
+  }, [formResponse]);
+
+  useEffect(() => {
     const ratingCount = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
     const ratingColor = ["#3b82f6", "#f59e0b", "#ef4444", "#10b981", "#6366f1"];
 
@@ -121,8 +136,6 @@ function Form() {
         color: ratingColor[index],
       })
     );
-
-    console.log(chartData);
 
     setPieChartData(chartData);
   }, [formResponse]);
@@ -153,7 +166,7 @@ function Form() {
                 </Button>
               </Link>
               <div className="flex flex-col">
-                <span className="text-lg sm:text-2xl font-bold text-gray-900">
+                <span className="text-lg sm:text-2xl font-bold text-gray-900 capitalize">
                   {formData.title}
                 </span>
                 <span className="text-sm text-muted-foreground hidden sm:block">
@@ -184,7 +197,9 @@ function Form() {
                   </>
                 )}
               </Button>
-              <Badge variant="default">{formData.status}</Badge>
+              <Badge variant="default" className="capitalize">
+                {formData.status}
+              </Badge>
               <Link to={`/dashboard/${id}/edit`}>
                 <Button variant="outline" className="cursor-pointer">
                   <SquarePen />
@@ -211,21 +226,27 @@ function Form() {
               <CardTitle className="text-xs sm:text-sm font-medium ">
                 Total Responses
               </CardTitle>
-              <MessageSquareQuote />
+              <MessageSquareQuote className="w-3 sm:w-4 h-3 sm:h-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold ">{formResponse?.length}</div>
+              <p className="text-sm text-muted-foreground">
+                This shows the total response
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-xs sm:text-sm font-medium ">
-                Total Forms
+                Average Rating
               </CardTitle>
-              <MessageSquare className="w-3 sm:w-4 h-3 sm:h-4" />
+              <Star className="w-3 sm:w-4 h-3 sm:h-4" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold ">3</div>
+              <div className="text-2xl font-bold ">{avgRating}⭐</div>
+              <p className="text-sm text-muted-foreground">
+                This shows the average rating
+              </p>
             </CardContent>
           </Card>
           <Card>
@@ -233,23 +254,41 @@ function Form() {
               <CardTitle className="text-xs sm:text-sm font-medium ">
                 Total Questions
               </CardTitle>
-              <FileQuestionMark />
+              <FileQuestionMark className="w-3 sm:w-4 h-3 sm:h-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold ">
                 {formData.questions?.length}
               </div>
+              <p className="text-sm text-muted-foreground">
+                This shows the total questions
+              </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-xs sm:text-sm font-medium ">
-                Total Forms
+                Form Status
               </CardTitle>
-              <MessageSquare className="w-3 sm:w-4 h-3 sm:h-4" />
+              {formData.status === "active" ? (
+                <Check className="w-3 sm:w-4 h-3 sm:h-4" />
+              ) : (
+                <X className="w-3 sm:w-4 h-3 sm:h-4" />
+              )}
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold ">3</div>
+              <div className="text-2xl font-bold capitalize">
+                {formData.status}
+              </div>
+              {formData.status === "active" ? (
+                <p className="text-sm text-muted-foreground">
+                  To make form inactive edit form
+                </p>
+              ) : (
+                <p className="text-sm text-red-500">
+                  To make form active edit form
+                </p>
+              )}
             </CardContent>
           </Card>
         </div>

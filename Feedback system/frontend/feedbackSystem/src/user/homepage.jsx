@@ -57,7 +57,7 @@ export default function FeedbackHome() {
               <CardHeader>
                 <div className="flex items-start justify-between">
                   <div>
-                    <CardTitle className="text-xl mb-2">{formData.title}</CardTitle>
+                    <CardTitle className="text-xl mb-2 capitalize">{formData.title}</CardTitle>
                     <CardDescription className="text-base">
                       {formData.description}
                     </CardDescription>

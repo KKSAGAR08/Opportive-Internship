@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 import { Link, useNavigate } from "react-router-dom";
-import { Plus, LogOut, MessageSquare } from "lucide-react";
+import { Plus, LogOut, MessageSquare, Users, ShieldCheck,CalendarCog } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { CardDescription, CardFooter } from "../components/ui/card";
 import { useEffect } from "react";
@@ -36,6 +36,7 @@ function Dashboard() {
   const [formData, setFormData] = useState([]);
   const [totalResponse, setTotalResponse] = useState(0);
   const [totalActiveForm, setTotalActiveForm] = useState(0);
+  const [thisMonthCount, setThisMonthCount] = useState(0);
 
   useEffect(() => {
     const total = formData.reduce((sum, e) => sum + e.response, 0);
@@ -43,6 +44,23 @@ function Dashboard() {
 
     const active = formData.filter((form) => form.status === "active");
     setTotalActiveForm(active);
+
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+
+    const formsThisMonth = formData.filter((form) => {
+      const formDate = new Date(form.createdAt);
+      return (
+        formDate.getMonth() === currentMonth &&
+        formDate.getFullYear() === currentYear
+      );
+    });
+
+    setThisMonthCount(formsThisMonth.length);
+
+    console.log(thisMonthCount)
+
   }, [formData]);
 
   return (
@@ -64,7 +82,7 @@ function Dashboard() {
                 variant="outline"
                 className="cursor-pointer flex justify-center items-center"
                 onClick={() => {
-                  localStorage.removeItem("token"); 
+                  localStorage.removeItem("token");
                   navigate("/login");
                 }}
               >
@@ -80,12 +98,12 @@ function Dashboard() {
               <CardTitle className="text-xs sm:text-sm font-medium ">
                 Total Responses
               </CardTitle>
-              <MessageSquare className="w-3 sm:w-4 h-3 sm:h-4" />
+              <Users className="w-3 sm:w-4 h-3 sm:h-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold ">{totalResponse}</div>
               <p className="text-sm text-muted-foreground">
-                +2 from last month
+                This shows the total response
               </p>
             </CardContent>
           </Card>
@@ -99,7 +117,7 @@ function Dashboard() {
             <CardContent>
               <div className="text-2xl font-bold ">{formData?.length}</div>
               <p className="text-sm text-muted-foreground">
-                +2 from last month
+                This shows the total forms
               </p>
             </CardContent>
           </Card>
@@ -108,28 +126,28 @@ function Dashboard() {
               <CardTitle className="text-xs sm:text-sm font-medium ">
                 Total Active Forms
               </CardTitle>
-              <MessageSquare className="w-3 sm:w-4 h-3 sm:h-4" />
+              <ShieldCheck className="w-3 sm:w-4 h-3 sm:h-4" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold ">
                 {totalActiveForm.length}
               </div>
               <p className="text-sm text-muted-foreground">
-                +2 from last month
+                This shows the total active forms
               </p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle className="text-xs sm:text-sm font-medium ">
-                Total Forms
+                Recent Forms
               </CardTitle>
-              <MessageSquare className="w-3 sm:w-4 h-3 sm:h-4" />
+              <CalendarCog className="w-3 sm:w-4 h-3 sm:h-4" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold ">3</div>
+              <div className="text-2xl font-bold ">{thisMonthCount}</div>
               <p className="text-sm text-muted-foreground">
-                +2 from last month
+               This shows forms created this month
               </p>
             </CardContent>
           </Card>
@@ -149,17 +167,17 @@ function Dashboard() {
           {formData?.map((forms, index) => (
             <Card className="hover:shadow-2xl transition-shadow" key={index}>
               <CardHeader className="flex flex-row items-center justify-between">
-                <Badge variant="default">{forms.status}</Badge>
+                <Badge variant="default" className=" capitalize">{forms.status}</Badge>
                 <MessageSquare className="w-3 sm:w-4 h-3 sm:h-4" />
               </CardHeader>
               <CardHeader>
-                <CardTitle className="font-semibold">{forms.title}</CardTitle>
+                <CardTitle className="font-semibold capitalize">{forms.title}</CardTitle>
                 <CardDescription>{forms.description}</CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-muted-foreground">Responses</span>
-                  <span className="font-medium">50</span>
+                  <span className="font-medium">{forms.response}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-muted-foreground">Created</span>
