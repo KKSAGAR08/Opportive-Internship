@@ -7,6 +7,6 @@ dotenv.config()
 const PORT = process.env.PORT
 
 server.listen(PORT,()=>{
-    console.log(`The app running on http://localhost:${PORT}`)
+    console.log(`The app running on https://online-chat-application-psi.vercel.app`)
     db.connectDB()
 })
