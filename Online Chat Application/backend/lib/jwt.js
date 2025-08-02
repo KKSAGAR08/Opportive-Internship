@@ -7,14 +7,13 @@ exports.generateToken = async (userID, res) => {
     });
 
     res.cookie("jwt", token, {
-      maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
-      sameSite: true,
-      secure: true,
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+      sameSite: "none", 
+      secure: true, 
     });
 
     return token;
-    
   } catch (error) {
     res.status(400).json({ message: "Cannot generate token" });
   }
