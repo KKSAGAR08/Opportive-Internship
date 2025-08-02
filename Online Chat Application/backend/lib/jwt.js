@@ -10,6 +10,7 @@ exports.generateToken = async (userID, res) => {
       maxAge: 7 * 24 * 60 * 60 * 1000,
       httpOnly: true,
       sameSite: true,
+      secure: true,
     });
 
     return token;
