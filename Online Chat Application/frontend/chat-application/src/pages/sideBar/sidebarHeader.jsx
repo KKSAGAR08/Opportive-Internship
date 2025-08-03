@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,9 +10,31 @@ import { MoreVertical, X, LogOut, Search } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {useAuthStore} from "../../store/userAuthStore"
+import toast from "react-hot-toast";
+import { userMessage } from "../../store/userMessage";
 
 function SidebarHeaderContent() {
   const {userAuth,logOUT} = useAuthStore();
+  const {users} = userMessage();
+
+  const [searchPerson,setSearchPerson] = useState("");
+
+  const search = () => {
+  if (!searchPerson.trim()) {
+    return toast.error('Enter the Name');
+  }
+
+  const found = users.some(user =>
+    user.name?.toLowerCase().includes(searchPerson.trim().toLowerCase())
+  );
+
+  if (found) {
+    return toast.success('User found');
+  } else {
+    return toast.error('User not found');
+  }
+};
+
 
   const createFallback = (name) => {
     if (!name) return "";
@@ -51,10 +73,17 @@ function SidebarHeaderContent() {
         </div>
       </div>
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
+        <Button className="absolute left-0 top-1/2 transform -translate-y-1/2 text-gray-400 w-9 h-9 rounded-none cursor-pointer"
+        variant="outline"
+        onClick={search}
+        >
+          <Search/>
+        </Button>
         <Input
           placeholder="Search contact"
           className="pl-10 bg-white border-0 rounded text-gray-800 placeholder-gray-500"
+          value={searchPerson}
+          onChange={(e)=>setSearchPerson(e.target.value)}
         />
       </div>
     </div>
