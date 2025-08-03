@@ -26,7 +26,7 @@ A full-stack real-time chat application that supports one-on-one messaging, grou
 ### Frontend:
 - React.js
 - Tailwind CSS
-- Radix UI (for components)
+- Radix UI
 - Axios
 
 ### Backend:
@@ -35,7 +35,7 @@ A full-stack real-time chat application that supports one-on-one messaging, grou
 - MongoDB (Mongoose)
 - Socket.IO
 - JWT Authentication
-- CORS support
+- CORS
 
 ---
 
@@ -43,15 +43,17 @@ A full-stack real-time chat application that supports one-on-one messaging, grou
 
 ### 📦 Requirements
 
-- Node.js (v18+ recommended)
+- Node.js (v18+)
 - MongoDB
 - Git
 
-### 📥 Clone the Repository & Switch Branch
+---
+
+### 📥 Clone the Repository & Switch to Master Branch
 
 ```bash
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
+git clone https://github.com/KKSAGAR08/Opportive-Internship.git
+cd Opportive-Internship
 
-# Checkout the development branch
-git checkout feature/chat
+# Ensure you're on master branch
+git checkout master
