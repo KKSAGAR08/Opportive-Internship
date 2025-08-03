@@ -50,3 +50,42 @@ A simple walkthrough of how the Feedback System works for both Admin and Users.
 ---
 
 Feel free to modify this for screenshots or video demos!
+
+
+
+
+
+# 💬 Online Chat Application – Usage Steps
+
+A quick guide on how to use the Online Chat Application.
+
+---
+
+## 🌐 Hosted App
+
+👉 [https://online-chat-application-psi.vercel.app](https://online-chat-application-psi.vercel.app)
+
+---
+
+## 🧭 Steps to Use the Chat App
+
+### 👤 Login or Signup
+
+1. **Already have an account?**  
+   - Click on **Login**, enter your credentials, and get started.
+
+2. **New user?**  
+   - Click on **Signup**, fill in your name, email, and password to create an account.
+
+---
+
+### 💬 Start Chatting
+
+- Once logged in, you can:
+  - Start one-on-one chats with other users
+  - Join or create group chats
+  - Send and receive messages in real-time
+
+---
+
+Enjoy seamless chatting with a responsive UI and real-time updates!
