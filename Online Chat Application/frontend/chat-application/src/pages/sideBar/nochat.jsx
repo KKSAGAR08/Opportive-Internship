@@ -16,6 +16,7 @@ function nochat() {
   return (
     <>
       <div className="text-center p-3">
+        <SidebarTrigger/>
         <span className="text-2xl capitalize text-green-500 font-semibold">
           {getGreeting()}
         </span>

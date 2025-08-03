@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { userMessage } from "../../store/userMessage";
 import { useAuthStore } from "../../store/userAuthStore";
 import toast from "react-hot-toast";
+import {SidebarTrigger} from "@/components/ui/sidebar"
 
 function Navbar() {
   const { users, isUserLoading, selectedUser, setSelectedUser, messages } =
@@ -80,12 +81,10 @@ function Navbar() {
             </span>
           </div>
         </div>
-        <div className="flex space-x-3">
+        <div className="flex space-x-3 items-center">
           {searchButton ? (
             <>
-              <Button variant="outline" className="cursor-pointer">
-                <Phone />
-              </Button>
+              <SidebarTrigger className="cursor-pointer block sm:hidden"/>
               <Button
                 variant="outline"
                 className="cursor-pointer"
