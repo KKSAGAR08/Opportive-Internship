@@ -7,7 +7,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["https://online-chat-application-psi.vercel.app"],
+    origin: ['https://online-chat-application-psi.vercel.app','https://online-chat-appli-git-aa66ab-kksagar08062004-gmailcoms-projects.vercel.app','https://online-chat-application-32cavu49g.vercel.app'],
   },
 });
 

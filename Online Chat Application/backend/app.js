@@ -10,7 +10,7 @@ const {app} = require('./lib/socketio')
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors({
-  origin: 'https://online-chat-application-psi.vercel.app',
+  origin: ['https://online-chat-application-psi.vercel.app','https://online-chat-appli-git-aa66ab-kksagar08062004-gmailcoms-projects.vercel.app','https://online-chat-application-32cavu49g.vercel.app'],
   credentials: true
 }));
 

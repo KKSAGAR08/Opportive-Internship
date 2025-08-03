@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import {SidebarTrigger} from "@/components/ui/sidebar"
 import { Phone, Search, Video, X } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import { userMessage } from "../../store/userMessage";
@@ -83,9 +84,7 @@ function Navbar() {
         <div className="flex space-x-3">
           {searchButton ? (
             <>
-              <Button variant="outline" className="cursor-pointer">
-                <Phone />
-              </Button>
+              <SidebarTrigger/>
               <Button
                 variant="outline"
                 className="cursor-pointer"
