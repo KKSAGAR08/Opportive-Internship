@@ -8,7 +8,7 @@ A full-stack web application where users can submit feedback via forms, and admi
 
 👉 [https://feedback-collection-system-five.vercel.app](https://feedback-collection-system-five.vercel.app)
 
-> Replace with your actual deployed link if hosted.
+
 
 ---
 
