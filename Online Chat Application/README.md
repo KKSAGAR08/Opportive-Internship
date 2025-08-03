@@ -20,6 +20,26 @@ A full-stack real-time chat application that supports one-on-one messaging, real
 
 ---
 
+## 🧭 Steps to Use the Chat App
+
+### 👤 Login or Signup
+
+1. **Already have an account?**  
+   - Click on **Login**, enter your credentials, and get started.
+
+2. **New user?**  
+   - Click on **Signup**, fill in your name, email, and password to create an account.
+
+---
+
+### 💬 Start Chatting
+
+- Once logged in, you can:
+  - Start one-on-one chats with other users
+  - Send and receive messages in real-time
+
+---
+
 ## 🛠 Tech Stack
 
 ### Frontend:
