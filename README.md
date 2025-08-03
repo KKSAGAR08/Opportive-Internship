@@ -1,6 +1,6 @@
 # 💬 Online Chat Application
 
-A full-stack real-time chat application that supports one-on-one messaging, group chats, authentication, and responsive design.
+A full-stack real-time chat application that supports one-on-one messaging, realtime messaging, authentication, and responsive design.
 
 ---
 
@@ -14,7 +14,6 @@ A full-stack real-time chat application that supports one-on-one messaging, grou
 
 - 🔐 User Authentication (Signup & Login)
 - 👤 One-on-One Messaging
-- 👥 Group Chat (Create and manage groups)
 - 📱 Responsive UI (mobile & desktop)
 - 🔄 Real-time messaging with Socket.IO
 - 🌐 Deployed on Vercel
@@ -26,8 +25,8 @@ A full-stack real-time chat application that supports one-on-one messaging, grou
 ### Frontend:
 - React.js
 - Tailwind CSS
-- Radix UI
 - Axios
+- zustand
 
 ### Backend:
 - Node.js
