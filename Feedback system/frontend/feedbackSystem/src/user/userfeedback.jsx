@@ -58,8 +58,6 @@ function UserFeedbackForm() {
     e.preventDefault();
     setIsSubmitting(true);
 
-    
-
     let unAnswered = [];
 
     // Check if all normal questions are answered
@@ -98,17 +96,19 @@ function UserFeedbackForm() {
       overallRating,
     };
 
-    console.log(finalForm);
+    // console.log(finalForm);
 
     try {
       const response = await axios.post(`${apiUrl}/user/${formId}`, finalForm);
-      console.log(response.data.message);
+      // console.log(response.data.message);
+
+      console.log("response.data");
       setIsSubmitting(false);
 
       setCurrentStep("success");
     } catch (error) {
       alert(
-        "error from backend " + (error.response?.data?.error || error.message)
+        "error from backend " + (error.response?.data?.error || error.message),
       );
     }
   };
@@ -174,8 +174,8 @@ function UserFeedbackForm() {
                 currentStep === "questions"
                   ? "bg-blue-600 text-white"
                   : currentStep === "success"
-                  ? "bg-green-600 text-white"
-                  : "bg-gray-300 text-gray-600"
+                    ? "bg-green-600 text-white"
+                    : "bg-gray-300 text-gray-600"
               }`}
             >
               {currentStep === "success" ? "✓" : "2"}

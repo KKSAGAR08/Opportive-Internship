@@ -11,6 +11,8 @@ exports.storeFeedback = async (req, res) => {
     const { formId, userDetails, responses, overallRating } = req.body;
     const { name, email } = userDetails;
 
+    console.log("User Response")
+
     const feedback = await Feedback.create({
       formId,
       name,
@@ -21,6 +23,7 @@ exports.storeFeedback = async (req, res) => {
 
     await Form.findByIdAndUpdate(formId, { $inc: { response: 1 } });
 
+    console.log("Done making Update")
 
     const userMailOptions = {
       from: process.env.EMAIL_USER,
@@ -29,6 +32,8 @@ exports.storeFeedback = async (req, res) => {
       text: `Dear ${name},\n\nThank you for submitting your feedback. We appreciate your time and input!\n\nBest,\nFeedbackPro Team`,
     };
 
+    console.log("Done making subject")
+
     const adminMailOptions = {
       from: process.env.EMAIL_USER,
       to: process.env.EMAIL_USER,
@@ -36,8 +41,12 @@ exports.storeFeedback = async (req, res) => {
       text: `Hello Admin,\n\nA new feedback has been submitted by ${name} (${email}).\n`,
     };
 
+    console.log("Done making subject")
+
     await transporter.sendMail(userMailOptions);
     await transporter.sendMail(adminMailOptions);
+
+    console.log("done Send Response");
 
     res.status(201).json({
       status: "success",

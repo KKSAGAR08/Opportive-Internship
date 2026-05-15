@@ -3,7 +3,6 @@ const morgan = require("morgan");
 var jwt = require("jsonwebtoken");
 
 morgan("tiny");
-// console.log(morgan)
 const SECRET_KEY = "secret123";
 
 exports.authenticateAdmin = async (req, res) => {
